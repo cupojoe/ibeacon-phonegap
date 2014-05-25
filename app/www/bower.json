@@ -1,0 +1,23 @@
+{
+  "name": "ibeacon-phonegap",
+  "version": "0.0.1",
+  "authors": [
+    "cupojoe <joe.fraga@gmail.com>"
+  ],
+  "description": "Phonegap client that sends ibeacon data to a rest service",
+  "main": "js/index.js",
+  "license": "MIT",
+  "homepage": "index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "requirejs": "~2.1.11"
+  }
+}

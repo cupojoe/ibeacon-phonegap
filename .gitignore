@@ -1,0 +1,9 @@
+*.mode1v3
+*.perspectivev3
+*.pbxuser
+.DS_Store
+.Spotlight-V100
+.Trashes
+build/
+app/www/bower_components/
+app/platforms/*
