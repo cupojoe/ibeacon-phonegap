@@ -7,7 +7,11 @@
 require.config({
     paths: {
         jquery: '../bower_components/jquery/dist/jquery',
-        app: 'app'
+        app: 'app',
+        localstorage: 'localstorage',
+        userController: 'controllers/user',
+        userView: 'views/user',
+        beaconController: 'controllers/beacons'
     },
     shim: {
         app: {
