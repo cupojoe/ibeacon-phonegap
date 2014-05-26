@@ -1,10 +1,13 @@
 define([
     'jquery'
     ], function($) {
+        var beacon;
 
         var init = function () {
-            var beacon = createBeacon();
-            IBeacon.startMonitoringForRegion(beacon, onDidDetermineStateCallback);
+            if (beacon === undefined) {
+                beacon = createBeacon();
+                IBeacon.startMonitoringForRegion(beacon, onDidDetermineStateCallback);
+            }
         };
 
         var createBeacon = function() {
@@ -29,7 +32,7 @@ define([
                 'state': result.state
             }
             $.ajax({
-                url: 'http://10.0.1.25:8080/range/post',
+                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/range/post',
                 type: "POST",
                 data: JSON.stringify(data),
                 contentType: "application/json",

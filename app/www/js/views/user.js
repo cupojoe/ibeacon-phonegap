@@ -1,6 +1,8 @@
 define([
-    'jquery', 'userController'
-    ], function($, controller) {
+    'jquery',
+    'userController',
+    'beaconController'
+    ], function($, controller, beaconController) {
         var data;
 
         var init = function(_userdata) {
@@ -17,6 +19,7 @@ define([
                 $('.edit-send-btn').off('click', onSend);
                 $('.edit-send-btn').on('click', onEdit);
             }
+            beaconController.init();
         };
 
         var prepareForEdit = function() {

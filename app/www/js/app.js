@@ -1,9 +1,8 @@
 define([
     'jquery',
     'userController',
-    'userView',
-    'beaconController'
-    ], function($, userController, userView, beaconController) {
+    'userView'
+    ], function($, userController, userView) {
 
         // Application Constructor
         var initialize = function() {
@@ -14,14 +13,14 @@ define([
         // Bind any events that are required on startup. Common events are:
         // 'load', 'deviceready', 'offline', and 'online'.
         var bindEvents = function() {
-            //if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
                 document.addEventListener('deviceready', onDeviceReady, false);
-            /*} else {
+            } else {
                 window.device = {
-                    deviceid: "71EF5A2C-44A8-4F2C-BB75-F023752AEA70"
+                    uuid: "71EF5A2C-44A8-4F2C-BB75-F023752AEA70"
                 };
                 onDeviceReady();
-            }*/
+            }
         };
 
         // deviceready Event Handler
@@ -36,7 +35,6 @@ define([
             userView.init(res);
             userView.viewIn();
             userView.populateFormControl();
-            beaconController.init();
         };
 
         var onUserGetError = function(err) {

@@ -4,7 +4,7 @@ define([
         var getUser = function (deviceID, successCallback, errorCallback) {
             console.log(deviceID);
             $.ajax({
-                url: 'http://10.0.1.25:8080/user/' + deviceID + '/get',
+                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/user/' + deviceID + '/get',
                 type: "GET",
                 contentType: "application/json",
                 crossDomain: true,
@@ -22,7 +22,7 @@ define([
 
         var putUser = function(deviceID, username, successCallback, errorCallback) {
             $.ajax({
-                url: 'http://10.0.1.25:8080/user/put',
+                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/user/put',
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify({
