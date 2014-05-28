@@ -19,6 +19,10 @@
                         {
                             "xml": "<feature name=\"IBeacon\"><param name=\"ios-package\" value=\"CDVIBeacon\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -28,6 +32,12 @@
                     "CoreBluetooth.framework": [
                         {
                             "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": "true",
                             "count": 1
                         }
                     ]
@@ -43,6 +53,9 @@
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         },
         "org.apache.cordova.ibeacon": {
+            "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         }
     },

@@ -1,8 +1,7 @@
 define([
     'jquery',
-    'userController',
-    'beaconController'
-    ], function($, controller, beaconController) {
+    'userController'
+    ], function($, controller) {
         var data;
 
         var init = function(_userdata) {
@@ -19,7 +18,6 @@ define([
                 $('.edit-send-btn').off('click', onSend);
                 $('.edit-send-btn').on('click', onEdit);
             }
-            beaconController.init();
         };
 
         var prepareForEdit = function() {
@@ -42,7 +40,8 @@ define([
                     populateFormControl();
                 },
                 function(err) {
-                    console.log('Error while sending username to the server: ' + err);
+                    $('.error-container').addClass('show');
+                    $('.error-text').text(err);
                 }
             );
         };

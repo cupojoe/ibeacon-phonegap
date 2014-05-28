@@ -7,11 +7,13 @@
 require.config({
     paths: {
         jquery: '../bower_components/jquery/dist/jquery',
+        fastclick: '../bower_components/fastclick/lib/fastclick',
         app: 'app',
         localstorage: 'localstorage',
         userController: 'controllers/user',
         userView: 'views/user',
-        beaconController: 'controllers/beacons'
+        beaconController: 'controllers/beacons',
+        config: 'config/app-config'
     },
     shim: {
         app: {

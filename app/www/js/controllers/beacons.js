@@ -1,13 +1,16 @@
 define([
-    'jquery'
-    ], function($) {
+    'jquery',
+    'config'
+    ], function($, config) {
         var beacon;
+        var ranging = false;
 
         var init = function () {
             if (beacon === undefined) {
                 beacon = createBeacon();
-                IBeacon.startMonitoringForRegion(beacon, onDidDetermineStateCallback);
             }
+            IBeacon.startMonitoringForRegion(beacon, onDidDetermineStateCallback);
+            ranging = true;
         };
 
         var createBeacon = function() {
@@ -32,7 +35,7 @@ define([
                 'state': result.state
             }
             $.ajax({
-                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/range/post',
+                url: config.restServer + ':' + config.port + '/range/post',
                 type: "POST",
                 data: JSON.stringify(data),
                 contentType: "application/json",
@@ -41,14 +44,29 @@ define([
                 success: function (res) {
                     console.log('%j', res);
                 },
-                error: function (er) {
-                    console.log('%j', er);
+                error: function (xhr, textStatus, err) {
+                    if (xhr.status === 0) {
+                        textStatus = 'Connection refused by server. Is the server running? ' + new Date();
+                    }
+                    $('.error-container').addClass('show');
+                    $('.error-text').text(textStatus);
                 }
             });
         };
 
+        var stop = function() {
+            IBeacon.stopMonitoringForRegion(beacon);
+            ranging = false;
+        };
+
+        var isRanging = function() {
+            return ranging;
+        };
+
         return {
-            init: init
+            init: init,
+            stop: stop,
+            isRanging: isRanging
         }
     }
 );

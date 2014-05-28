@@ -6,4 +6,5 @@
 .Trashes
 build/
 app/www/bower_components/
+app/www/js/config/app-config.js
 app/platforms/*

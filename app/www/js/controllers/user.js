@@ -1,10 +1,10 @@
 define([
-    'jquery'
-    ], function($) {
+    'jquery',
+    'config'
+    ], function($, config) {
         var getUser = function (deviceID, successCallback, errorCallback) {
-            console.log(deviceID);
             $.ajax({
-                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/user/' + deviceID + '/get',
+                url: config.restServer + ':' + config.port + '/user/' + deviceID + '/get',
                 type: "GET",
                 contentType: "application/json",
                 crossDomain: true,
@@ -16,13 +16,18 @@ define([
                         errorCallback(textStatus);
                     }
                 },
-                error: errorCallback
+                error: function (xhr, textStatus, err) {
+                    if (xhr.status === 0) {
+                        textStatus = 'Connection refused by server. Is the server running? ' + new Date();
+                    }
+                    errorCallback(textStatus);
+                }
             });
         };
 
         var putUser = function(deviceID, username, successCallback, errorCallback) {
             $.ajax({
-                url: 'http://ec2-54-200-154-201.us-west-2.compute.amazonaws.com:8080/user/put',
+                url: config.restServer + ':' + config.port + '/user/put',
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -41,7 +46,12 @@ define([
                         errorCallback(textStatus);
                     }
                 },
-                error: errorCallback
+                error: function (xhr, textStatus, err) {
+                    if (xhr.status === 0) {
+                        textStatus = 'Connection refused by server. Is the server running? ' + new Date();
+                    }
+                    errorCallback(textStatus);
+                }
             });
         };
 

@@ -22,9 +22,11 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, minimum-scale=1, width=device-width target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.yeti.theme.min.css" />
         <link rel="stylesheet" type="text/css" href="bower_components/fontawesome/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <script data-main="js/main" src="bower_components/requirejs/require.js"></script>
@@ -33,12 +35,16 @@
     </head>
     <body>
         <div id="app-container">
-            <div class="username-field input-group margin-bottom-sm btn-group">
+            <div class="username-field input-group input-group-lg">
                 <span class="disabled input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                 <input class="disabled form-control" disabled="disabled" type="text" autocomplete="on" maxlength="6" name="username" placeholder="Enter user name"/>
                 <span class="input-group-btn"><button class="btn btn-primary edit-send-btn"><i class="edit-send-icon fa fa-edit fa-fw"></i></button></span>
             </div>
             <div class="logo"></div>
+            <div class="error-container bg-danger text-danger">
+                <i class="fa fa-lg fa-warning"></i>
+                <span class="error-text">Errors will be displayed here</span>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
     </body>
