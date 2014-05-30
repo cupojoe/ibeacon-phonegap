@@ -13,7 +13,8 @@ require.config({
         userController: 'controllers/user',
         userView: 'views/user',
         beaconController: 'controllers/beacons',
-        config: 'config/app-config'
+        config: 'config/app-config',
+        error: 'views/error'
     },
     shim: {
         app: {

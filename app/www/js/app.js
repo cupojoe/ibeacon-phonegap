@@ -4,8 +4,9 @@ define([
     'beaconController',
     'userView',
     'config',
-    'fastclick'
-    ], function($, userController, beaconController, userView, config, Fastclick) {
+    'fastclick',
+    'error'
+    ], function($, userController, beaconController, userView, config, Fastclick, error) {
 
         // Application Constructor
         var initialize = function() {
@@ -50,8 +51,7 @@ define([
         };
 
         var onUserGetError = function(err) {
-            $('.error-container').addClass('show');
-            $('.error-text').text(err);
+            error.show(err);
             userView.prepareForEdit();
             userView.viewIn();
             if (beaconController.isRanging()) {
@@ -60,14 +60,13 @@ define([
         };
 
         var onNetworkDisconnect = function() {
-            $('.error-container').addClass('show');
-            $('.error-text').text('No network connection');
+            error.show('No network connection');
             if (beaconController.isRanging()) {
                 beaconController.stop();
             }
         };
         var onNetworkConnect = function() {
-            $('.error-container').removeClass('show');
+            error.hide();
             userController.getUser(window.device.uuid, onUserFound, onUserGetError);
         };
 

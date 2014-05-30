@@ -1,7 +1,8 @@
 define([
     'jquery',
-    'userController'
-    ], function($, controller) {
+    'userController',
+    'beaconController'
+    ], function($, controller, beaconController) {
         var data;
 
         var init = function(_userdata) {
@@ -38,10 +39,10 @@ define([
                 function(res) {
                     data = res;
                     populateFormControl();
+                    beaconController.init();
                 },
                 function(err) {
-                    $('.error-container').addClass('show');
-                    $('.error-text').text(err);
+                    error.show(err);
                 }
             );
         };
