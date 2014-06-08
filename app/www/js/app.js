@@ -39,6 +39,7 @@ define([
                 onNetworkConnect();
             }
             FastClick.attach(document.body);
+            console.log("DEVICE ID: " + window.device.uuid);
         };
 
         var onUserFound = function(res) {
