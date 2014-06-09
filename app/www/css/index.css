@@ -67,6 +67,7 @@ input {
     padding:196px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
     margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
                                    /* offset horizontal: half of text area width */
+    opacity: .2;
 }
 
 .username-field {
@@ -100,6 +101,11 @@ input {
 }
 .error-container.show {
     opacity: 1;
+}
+.error-container .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {

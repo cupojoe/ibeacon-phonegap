@@ -49,7 +49,6 @@ define([
 
         var viewIn = function () {
             $('#app-container').addClass('fade-in');
-            $('.logo').addClass('blink');
         };
 
         var viewOut = function () {

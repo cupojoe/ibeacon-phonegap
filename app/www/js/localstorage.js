@@ -6,11 +6,13 @@ define([
             return;
         }
         var db = window.openDatabase("AppData", "1.0", "App Data DB", 5 * 1024 * 1024);
-        var userdata;
+        var userdata,
+            queryCallback;
 
-        var loadDB = (function() {
+        var loadDB = function() {
             db.transaction(openDB, onError, onConnectionSuccess);
-        })();
+        };
+
         var openDB = function (tx) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS userdata (id INTEGER PRIMARY KEY AUTOINCREMENT, deviceid TEXT, username TEXT)", [], onQuerySuccess, onError);
             tx.executeSql("SELECT * FROM userdata", [], onQuerySuccess, onError);
@@ -19,6 +21,7 @@ define([
         var onConnectionSuccess = function() {
             //console.log("_______ Success! _______");
         };
+
         var onQuerySuccess = function(tx, results) {
             var len = results.rows.length;
             if (len === 1) {
@@ -27,6 +30,9 @@ define([
                     'username': results.rows.item(0).username,
                     'deviceid': results.rows.item(0).deviceid
                 };
+            }
+            if (typeof queryCallback === 'function') {
+                queryCallback(userdata);
             }
         }
         var saveUserData = function(deviceid, username) {
@@ -37,8 +43,16 @@ define([
             db.transaction(saveToDB, onError, onConnectionSuccess);
         };
 
-        var getUserData = function() {
-            return userdata;
+        var getUserData = function(callback) {
+            queryCallback = undefined;
+            db.transaction(loadFromDB, onError, onConnectionSuccess);
+            if (typeof callback === 'function') {
+                queryCallback = callback;
+            }
+        };
+
+        var loadFromDB = function(tx) {
+            tx.executeSql('SELECT * FROM userdata', [], onQuerySuccess, onError);
         };
 
         var saveToDB = function(tx) {
@@ -73,6 +87,8 @@ define([
                 console.log("7 - TIMEOUT_ERR: A lock for the transaction could not be obtained in a reasonable time.");
             }
         };
+
+        loadDB();
 
         return {
             db: db,

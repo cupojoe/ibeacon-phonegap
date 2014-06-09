@@ -6,7 +6,14 @@ define([
     'config',
     'fastclick',
     'error'
-    ], function($, userController, beaconController, userView, config, Fastclick, error) {
+], function($,
+    userController,
+    beaconController,
+    userView,
+    config,
+    Fastclick,
+    error
+    ) {
 
         // Application Constructor
         var initialize = function() {
@@ -32,6 +39,13 @@ define([
 
         // deviceready Event Handler
         var onDeviceReady = function() {
+            /*localstorage.getUserData(function(results) {
+                console.log('User data results');
+                console.log(results);
+                if (results === undefined) {
+                    localstorage.setUserData(window.device.uuid, 'Pepito');
+                }
+            });*/
             if (parseInt(window.device.version) === 7) {
                 $('body').addClass('ios7');
             }
@@ -40,6 +54,18 @@ define([
             }
             FastClick.attach(document.body);
             console.log("DEVICE ID: " + window.device.uuid);
+        };
+
+        var onNetworkConnect = function() {
+            error.hide();
+            userController.getUser(window.device.uuid, onUserFound, onUserGetError);
+        };
+
+        var onNetworkDisconnect = function() {
+            error.show('No network connection');
+            if (beaconController.isRanging()) {
+                beaconController.stop();
+            }
         };
 
         var onUserFound = function(res) {
@@ -58,17 +84,6 @@ define([
             if (beaconController.isRanging()) {
                 beaconController.stop();
             }
-        };
-
-        var onNetworkDisconnect = function() {
-            error.show('No network connection');
-            if (beaconController.isRanging()) {
-                beaconController.stop();
-            }
-        };
-        var onNetworkConnect = function() {
-            error.hide();
-            userController.getUser(window.device.uuid, onUserFound, onUserGetError);
         };
 
         return {

@@ -17,6 +17,8 @@ define([
                     console.log('Error while starting monitoring for region ' + region.uuid);
                 }
             );
+            ranging = true;
+            $('.logo').addClass('blink');
         };
 
         var onDidDetermineStateCallback = function (result) {
@@ -53,6 +55,7 @@ define([
         var stop = function() {
             IBeacon.stopMonitoringForRegion(beacon);
             ranging = false;
+            $('.logo').removeClass('blink');
         };
 
         var isRanging = function() {
