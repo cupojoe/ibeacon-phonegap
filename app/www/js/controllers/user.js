@@ -12,6 +12,8 @@ define([
                 success: function (res, textStatus, xhr) {
                     if (xhr.status === 200) {
                         successCallback(res);
+                    } else if (xhr.status === 204) {
+                        errorCallback('Device not found. Enter new username');
                     } else {
                         errorCallback(textStatus);
                     }

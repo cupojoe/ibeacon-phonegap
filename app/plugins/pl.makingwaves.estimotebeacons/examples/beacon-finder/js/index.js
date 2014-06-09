@@ -33,20 +33,8 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.loadJS('js/tests.js');
+        app.receivedEvent('deviceready');
     },
-
-    loadJS: function(file) {
-        // DOM: Create the script element
-        var jsElm = document.createElement("script");
-        // set the type attribute
-        jsElm.type = "application/javascript";
-        // make the script element load file
-        jsElm.src = file;
-        // finally insert the element to the body element in order to load the script
-        document.body.appendChild(jsElm);
-    },
-
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -56,6 +44,39 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
+        var beaconManager = new BeaconManager();
+        var beaconsList = document.getElementById('beacons');
+        beaconManager.startPulling(1000);
+        beaconManager.on('updated', function(beacon){
+            var item = document.getElementById('beacon_' + beacon.major + '_' + beacon.minor);
+
+            if(item) {
+                item.innerText = beacon.major + '/' + beacon.minor + ' - ' + formatDistance(beacon.distance);
+            }
+        });
+        beaconManager.on('added', function(beacon) {
+            var item = document.createElement('li');
+            item.innerText = beacon.major + '/' + beacon.minor + ' - ' + formatDistance(beacon.distance);
+            item.id = 'beacon_' + beacon.major + '_' + beacon.minor;
+
+            beaconsList.appendChild(item);
+        });
+        beaconManager.on('removed', function(beacon) {
+            var item = document.getElementById('beacon_' + beacon.major + '_' + beacon.minor);
+
+            if(item) {
+                beaconsList.removeChild(item);
+            }
+        });
+
         console.log('Received Event: ' + id);
     }
 };
+
+function formatDistance(meters) {
+    if(meters > 1) {
+        return meters.toFixed(3) + ' m';
+    } else {
+        return (meters * 100).toFixed(3) + ' cm';
+    }
+}

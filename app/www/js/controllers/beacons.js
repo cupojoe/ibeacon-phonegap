@@ -2,37 +2,33 @@ define([
     'jquery',
     'config'
     ], function($, config) {
-        var beacon;
+        var region = {
+            uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+            major: 15676,
+            minor: 51068,
+            name: 'Office'
+        };
         var ranging = false;
 
         var init = function () {
-            if (beacon === undefined) {
-                beacon = createBeacon();
-            }
-            IBeacon.startMonitoringForRegion(beacon, onDidDetermineStateCallback);
-            ranging = true;
-        };
-
-        var createBeacon = function() {
-            var identifier = 'Estimote'; // optional
-            var major = 15676; // optional
-            var minor = 51068; // optional
-            var uuid = 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'; // mandatory
-
-            // throws an error if the parameters are not valid
-            var beacon = new IBeacon.CLBeaconRegion(uuid, major, minor, identifier);
-            return beacon;
+            window.EstimoteBeacons.startMonitoringForRegion(region.uuid, region.major, region.minor,
+                onDidDetermineStateCallback,
+                function() {
+                    console.log('Error while starting monitoring for region ' + region.uuid);
+                }
+            );
         };
 
         var onDidDetermineStateCallback = function (result) {
+            console.log(result);
             var data = {
-                'uuid' : 'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
-                'major' : 15676,
-                'minor' : 51068,
-                'region' : 'Region 1',
+                'uuid' : region.uuid,
+                'major' : region.major,
+                'minor' : region.minor,
+                'region' : region.name,
                 'uid' : window.device.uuid,
                 'date': Date.now(),
-                'state': result.state
+                'state': result.action
             }
             $.ajax({
                 url: config.restServer + ':' + config.port + '/range/post',
@@ -42,7 +38,7 @@ define([
                 crossDomain: true,
                 cache: false,
                 success: function (res) {
-                    console.log('%j', res);
+                    console.log('Status update successfull');
                 },
                 error: function (xhr, textStatus, err) {
                     if (xhr.status === 0) {
