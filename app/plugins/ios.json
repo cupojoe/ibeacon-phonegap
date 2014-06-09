@@ -17,11 +17,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"IBeacon\"><param name=\"ios-package\" value=\"CDVIBeacon\" /></feature>",
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "xml": "<feature name=\"EstimoteBeacons\"><param name=\"ios-package\" value=\"EstimoteBeacons\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -39,6 +39,16 @@
                         {
                             "xml": "true",
                             "count": 1
+                        },
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "CoreLocation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ]
                 }
@@ -52,10 +62,10 @@
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         },
-        "org.apache.cordova.ibeacon": {
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         },
-        "org.apache.cordova.network-information": {
+        "pl.makingwaves.estimotebeacons": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         }
     },
