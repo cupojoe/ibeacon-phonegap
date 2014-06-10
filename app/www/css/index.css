@@ -28,9 +28,13 @@ html, body {
     background: #fff;
 }
 
-input {
+input, select {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
+}
+select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
 }
 
 #app-container.ios7 {
@@ -68,26 +72,46 @@ input {
     margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
                                    /* offset horizontal: half of text area width */
     opacity: .2;
+    z-index: -1;
+}
+.loader {
+    visibility: hidden;
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    margin:-18px 0px 0px -18px;  /* offset vertical: half of image height and text area height */
+    opacity: 0;
 }
 
-.username-field {
+.user-form {
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 90%;
     margin: 0;
-    -webkit-transition: all .5s;
-            transition: all .5s;
+    -webkit-transition: opacity .5s;
+            transition: opacity .5s;
+    top: 50%;
+    margin: -150px 5% 0 5%;
 }
-.ios7 .username-field {
+
+.username-edit-field {
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .5s;
+            transition: opacity .5s;
+}
+
+.ios7 .username-edit-field {
     margin-top: 26px;
 }
-.center {
-    top: 50%;
-    width: 90%;
-    margin: -100px 5% 0 5%;
+.show {
+    visibility: visible;
+    opacity: 1;
 }
-
+.send-btn, .cancel-btn {
+    width: 100%;
+}
 /* Error container */
 .error-container {
     position: absolute;

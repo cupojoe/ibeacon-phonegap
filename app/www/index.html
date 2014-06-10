@@ -35,17 +35,46 @@
     </head>
     <body>
         <div id="app-container">
-            <div class="username-field input-group input-group-lg">
-                <span class="disabled input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                <input class="disabled form-control" disabled="disabled" type="text" autocomplete="on" maxlength="6" name="username" placeholder="Enter user name"/>
-                <span class="input-group-btn"><button class="btn btn-primary edit-send-btn"><i class="edit-send-icon fa fa-edit fa-fw"></i></button></span>
-            </div>
             <div class="logo"></div>
+            <div class="username-edit-field">
+                <div class="form-group input-group edit-field input-group-lg">
+                    <span class="disabled input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input class="disabled form-control" disabled="disabled" type="text" autocomplete="on" maxlength="6" name="username"/>
+                    <span class="input-group-btn"><button class="btn btn-primary edit-btn"><i class="edit-icon fa fa-cogs"></i></button></span>
+                </div>
+            </div>
+
+            <form role="form" class="user-form">
+              <fieldset>
+                <div class="form-group username-field input-group input-group-lg">
+                    <span class="disabled input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input class="form-control" type="text" autocomplete="on" maxlength="6" name="username" placeholder="Enter user name"/>
+                </div>
+                <div class="form-group practice-field input-group input-group-lg">
+                    <span class="disabled input-group-addon"><i class="fa fa-group fa-fw"></i></span>
+                    <select id="practice-select" class="form-control">
+                        <option value="" disabled selected>Select Practice</option>
+                    </select>
+                </div>
+                <div class=" form-group text-center">
+                    <button class="btn btn-primary btn-lg send-btn">Send <i class="send-icon fa fa-paper-plane fa-fw"></i></button>
+                </div>
+                <div class=" form-group text-center">
+                    <button class="btn btn-danger btn-lg cancel-btn">Cancel <i class="cancel-icon fa fa-ban fa-fw"></i></button>
+                </div>
+              </fieldset>
+            </form>
+
+            <div class="loader">
+                <i class="fa fa-3x fa-circle-o-notch fa-spin"></i>
+            </div>
+
             <div class="error-container bg-danger text-danger">
                 <i class="fa fa-lg fa-warning"></i>
                 <span class="error-text">Errors will be displayed here</span>
                 <i class="close-btn fa fa-times fa-fn fa-2x"></i>
             </div>
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
     </body>

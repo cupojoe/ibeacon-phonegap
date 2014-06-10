@@ -1,43 +1,74 @@
 define([
     'jquery',
     'userController',
+    'practicesController',
     'beaconController'
-    ], function($, controller, beaconController) {
-        var data;
+    ], function($, controller, practicesController, beaconController) {
+        var data,
+            practices;
 
-        var init = function(_userdata) {
-            data = _userdata;
+        function init(userdata) {
+            data = userdata;
         };
 
-        var populateFormControl = function() {
+        function populateFormControl() {
             console.log('populateFormControl');
-            if (data !== undefined) {
-                $('.form-control').val(data.username);
-                $('.edit-send-icon').removeClass('fa-send').addClass('fa-edit');
-                $('.username-field').removeClass('center');
-                $('.form-control').attr('disabled', 'disabled');
-                $('.edit-send-btn').off('click', onSend);
-                $('.edit-send-btn').on('click', onEdit);
+            if (typeof data !== 'undefined') {
+                $('.username-edit-field').addClass('show');
+                $('.user-form').removeClass('show');
+                $('.edit-field .form-control').val(data.username);
+                $('.edit-btn').on('click', onEdit);
+                $('.send-btn').off('click', onSend);
+                $('.cancel-btn').off('click', populateFormControl);
             }
         };
 
-        var prepareForEdit = function() {
-            $('.edit-send-icon').removeClass('fa-edit').addClass('fa-send');
-            $('.username-field').addClass('center');
-            $('.form-control').removeAttr('disabled');
-            $('.edit-send-btn').on('click', onSend);
-            $('.edit-send-btn').off('click', onEdit);
-            $('.form-control').focus();
+        function prepareForEdit() {
+            $('.username-edit-field').removeClass('show');
+            if (typeof practices === 'undefined') {
+                $('.loader').addClass('show');
+                practices = [];
+                practicesController.getPractices(loadPractices, showRetryMessage);
+            } else {
+                showEditForm();
+            }
         };
 
-        var onEdit = function(e) {
+        function loadPractices(results) {
+            practices = results;
+            var $select = $('#practice-select');
+            for (var i=0; i<results.length; i++) {
+                $select.append($('<option></option>').attr('value', results[i].name).text(results[i].name));
+            }
+            showEditForm();
+        };
+
+        function showEditForm() {
+            if (typeof data !== 'undefined') {
+                $('.username-field > .form-control').val(data.username);
+                $('#practice-select').val(data.practice);
+            }
+            $('.loader').removeClass('show');
+            $('.user-form').addClass('show');
+            $('.send-btn').on('click', onSend);
+            $('.cancel-btn').off('click', populateFormControl);
+            $('.edit-btn').off('click', onEdit);
+        };
+
+        function showRetryMessage() {
+            practices = undefined;
+        };
+
+        function onEdit(e) {
             prepareForEdit();
         };
 
-        var onSend = function(e) {
-            controller.putUser(window.device.uuid, $('.form-control').val(),
+        function onSend(e) {
+            e.preventDefault();
+            controller.putUser(window.device.uuid, $('.username-field > .form-control').val(), $('#practice-select').val(),
                 function(res) {
-                    data = res;
+                    data.username = $('.username-field > .form-control').val();
+                    data.practice = $('#practice-select').val();
                     populateFormControl();
                     beaconController.init();
                 },
@@ -47,11 +78,11 @@ define([
             );
         };
 
-        var viewIn = function () {
+        function viewIn() {
             $('#app-container').addClass('fade-in');
         };
 
-        var viewOut = function () {
+        function viewOut() {
             $('#app-container').removeClass('fade-in');
         };
 

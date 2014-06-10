@@ -27,14 +27,15 @@ define([
             });
         };
 
-        var putUser = function(deviceID, username, successCallback, errorCallback) {
+        var putUser = function(deviceID, username, practice, successCallback, errorCallback) {
             $.ajax({
                 url: config.restServer + ':' + config.port + '/user/put',
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify({
                     'deviceid': deviceID,
-                    'username': username
+                    'username': username,
+                    'practice': practice
                 }),
                 crossDomain: true,
                 cache: false,

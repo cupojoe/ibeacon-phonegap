@@ -16,14 +16,14 @@ define([
     ) {
 
         // Application Constructor
-        var initialize = function() {
+        function initialize() {
             bindEvents();
         };
         // Bind Event Listeners
         //
         // Bind any events that are required on startup. Common events are:
         // 'load', 'deviceready', 'offline', and 'online'.
-        var bindEvents = function() {
+        function bindEvents() {
             if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
                 document.addEventListener('deviceready', onDeviceReady, false);
                 document.addEventListener("offline", onNetworkDisconnect, false);
@@ -33,12 +33,12 @@ define([
                     uuid: "71EF5A2C-44A8-4F2C-BB75-F023752AEA70"
                 };
                 onDeviceReady();
-                onUserGetError();
+                //onUserGetError();
             }
         };
 
         // deviceready Event Handler
-        var onDeviceReady = function() {
+        function onDeviceReady() {
             /*localstorage.getUserData(function(results) {
                 console.log('User data results');
                 console.log(results);
@@ -56,28 +56,28 @@ define([
             console.log("DEVICE ID: " + window.device.uuid);
         };
 
-        var onNetworkConnect = function() {
+        function onNetworkConnect() {
             error.hide();
             userController.getUser(window.device.uuid, onUserFound, onUserGetError);
         };
 
-        var onNetworkDisconnect = function() {
+        function onNetworkDisconnect() {
             error.show('No network connection');
             if (beaconController.isRanging()) {
                 beaconController.stop();
             }
         };
 
-        var onUserFound = function(res) {
+        function onUserFound(res) {
             userView.init(res);
-            userView.viewIn();
             userView.populateFormControl();
+            userView.viewIn();
             if (!beaconController.isRanging()) {
                 beaconController.init();
             }
         };
 
-        var onUserGetError = function(err) {
+        function onUserGetError(err) {
             error.show(err);
             userView.prepareForEdit();
             userView.viewIn();
