@@ -11,10 +11,13 @@ define([
         var ranging = false;
 
         var init = function () {
+            console.log('init EstimoteBeacons');
             window.EstimoteBeacons.startMonitoringForRegion(region.uuid, region.major, region.minor,
                 onDidDetermineStateCallback,
                 function() {
+                    ranging = false;
                     console.log('Error while starting monitoring for region ' + region.uuid);
+                    console.log(arguments);
                 }
             );
             ranging = true;
