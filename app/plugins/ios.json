@@ -17,11 +17,15 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"EstimoteBeacons\"><param name=\"ios-package\" value=\"EstimoteBeacons\" /></feature>",
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "xml": "<feature name=\"LocalNotification\"><param name=\"ios-package\" onload=\"true\" value=\"APPLocalNotification\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"EstimoteBeacons\"><param name=\"ios-package\" value=\"EstimoteBeacons\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -37,11 +41,11 @@
                     ],
                     "SystemConfiguration.framework": [
                         {
-                            "xml": "false",
+                            "xml": "true",
                             "count": 1
                         },
                         {
-                            "xml": "true",
+                            "xml": "false",
                             "count": 1
                         }
                     ],
@@ -62,10 +66,13 @@
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         },
-        "pl.makingwaves.estimotebeacons": {
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         },
-        "org.apache.cordova.network-information": {
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
+        },
+        "pl.makingwaves.estimotebeacons": {
             "PACKAGE_NAME": "com.agnystudio.ibeaconphonegap"
         }
     },

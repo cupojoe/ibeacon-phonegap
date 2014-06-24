@@ -2,6 +2,8 @@ define([
     'jquery',
     'config'
     ], function($, config) {
+        var user;
+
         var getUser = function (deviceID, successCallback, errorCallback) {
             $.ajax({
                 url: config.restServer + ':' + config.port + '/user/' + deviceID + '/get',
@@ -11,6 +13,7 @@ define([
                 cache: false,
                 success: function (res, textStatus, xhr) {
                     if (xhr.status === 200) {
+                        var user = res;
                         successCallback(res);
                     } else if (xhr.status === 204) {
                         errorCallback('Device not found. Enter new username');
@@ -41,10 +44,12 @@ define([
                 cache: false,
                 success: function(res, textStatus, xhr) {
                     if (xhr.status === 200) {
-                        successCallback({
+                        user = {
                             'deviceid': deviceID,
-                            'username': username
-                        });
+                            'username': username,
+                            'practice': practice
+                        };
+                        successCallback(user);
                     } else {
                         errorCallback(textStatus);
                     }

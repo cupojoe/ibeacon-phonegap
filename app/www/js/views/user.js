@@ -2,8 +2,9 @@ define([
     'jquery',
     'userController',
     'practicesController',
-    'beaconController'
-    ], function($, controller, practicesController, beaconController) {
+    'beaconController',
+    'error'
+    ], function($, controller, practicesController, beaconController, error) {
         var data,
             practices;
 
@@ -51,8 +52,14 @@ define([
             $('.loader').removeClass('show');
             $('.user-form').addClass('show');
             $('.send-btn').on('click', onSend);
-            $('.cancel-btn').off('click', populateFormControl);
+            $('.cancel-btn').on('click', populateFormControl);
             $('.edit-btn').off('click', onEdit);
+        };
+
+        function hideEditForm() {
+            $('.user-form').removeClass('show');
+            $('.send-btn').off('click', onSend);
+            $('.cancel-btn').off('click', populateFormControl);
         };
 
         function showRetryMessage() {
@@ -65,14 +72,24 @@ define([
 
         function onSend(e) {
             e.preventDefault();
-            controller.putUser(window.device.uuid, $('.username-field > .form-control').val(), $('#practice-select').val(),
+            var username = $('.username-field > .form-control').val();
+            var practice = $('#practice-select').val();
+            hideEditForm();
+            $('.loader').addClass('show');
+            controller.putUser(window.device.uuid, username, practice,
                 function(res) {
-                    data.username = $('.username-field > .form-control').val();
-                    data.practice = $('#practice-select').val();
+                    if (typeof data === 'undefined') {
+                        data = {};
+                    }
+                    data.username = username;
+                    data.practice = practice;
+                    $('.loader').removeClass('show');
+                    error.hide();
                     populateFormControl();
                     beaconController.init();
                 },
                 function(err) {
+                    console.log('error while saving user ' + err);
                     error.show(err);
                 }
             );
